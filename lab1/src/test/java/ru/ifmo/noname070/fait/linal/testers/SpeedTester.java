@@ -29,18 +29,4 @@ public class SpeedTester extends Tester {
             System.out.printf("    Время выполнения: %6.3f сек\n", duration / 1_000_000_000.0);
         }
     }
-
-    public static void main(String[] args) {
-        timeTest("testGetAndSetElement", () -> {
-            return true;
-        });
-
-        timeTest("testAddition", () -> {
-            return false;
-        });
-
-        timeTest("testMultiplication", () -> {
-            throw new RuntimeException("Some exception!");
-        });
-    }
 }
