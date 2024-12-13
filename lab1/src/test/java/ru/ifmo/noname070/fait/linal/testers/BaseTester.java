@@ -1,10 +1,14 @@
 package ru.ifmo.noname070.fait.linal.testers;
 
-import java.util.Objects;
 import java.util.function.BooleanSupplier;
 
-public class Tester {
-    protected static void test(String name, BooleanSupplier testlink) {
+public class BaseTester implements ITester {
+
+    public BaseTester() {
+    }
+
+    @Override
+    public void test(String name, BooleanSupplier testlink) {
         try {
             System.out.printf("Тест: %-50s", name);
             if (testlink.getAsBoolean()) {
@@ -17,11 +21,4 @@ public class Tester {
         }
     }
 
-    protected static boolean checkEquals(Object expected, Object actual, String errorMessage) {
-        if (!Objects.equals(expected, actual)) {
-            System.out.printf("%s \t\t:\t ожидалось \t:\t %s \t получено \t:\t%s", errorMessage, expected, actual);
-            return false;
-        }
-        return true;
-    }
 }

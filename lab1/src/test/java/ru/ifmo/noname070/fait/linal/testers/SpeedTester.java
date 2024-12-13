@@ -2,25 +2,25 @@ package ru.ifmo.noname070.fait.linal.testers;
 
 import java.util.function.BooleanSupplier;
 
-public class SpeedTester extends Tester {
+public class SpeedTester implements ITester {
 
-    public static void timeTest(String name, BooleanSupplier testlink) {
+    public SpeedTester() {
+    }
 
+    @Override
+    public void test(String name, BooleanSupplier testlink) {
         long startTime = System.nanoTime();
-
         try {
             System.out.printf("Тест: %-50s", name);
             boolean result = testlink.getAsBoolean();
             long endTime = System.nanoTime();
 
-            if (result) {
-                System.out.print("\u001B[32m" + "прошел успешно" + "\u001B[0m");
-            } else {
-                System.out.print("\u001B[31m" + "не прошел" + "\u001B[0m");
-            }
+            System.out.print(
+                    result ? "\u001B[32m" + "прошел успешно" + "\u001B[0m"
+                            : "\u001B[31m" + "не прошел" + "\u001B[0m");
 
             long duration = endTime - startTime;
-            System.out.printf("    Время выполнения: %6.3f сек\n", duration / 1_000_000_000.0);
+            System.out.printf("    Время выполнения: %6.5f сек\n", duration / 1_000_000_000.0);
 
         } catch (Exception e) {
             long endTime = System.nanoTime();

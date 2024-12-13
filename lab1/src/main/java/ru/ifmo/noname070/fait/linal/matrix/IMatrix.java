@@ -15,4 +15,6 @@ public interface IMatrix {
 
     IMatrix mulScalar(double s);
 
+    double det();
+
 }

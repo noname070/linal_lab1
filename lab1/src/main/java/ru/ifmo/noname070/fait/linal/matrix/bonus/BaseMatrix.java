@@ -10,9 +10,9 @@ public class BaseMatrix extends AbstractMatrix {
 
     protected final double[][] data;
 
-    public BaseMatrix(int rows, int columns) {
-        super(rows, columns);
-        this.data = new double[rows][columns];
+    public BaseMatrix(int rows, int cols) {
+        super(rows, cols);
+        this.data = new double[rows + 1][cols + 1];
     }
 
     public BaseMatrix(Pair<Integer, Integer> size) {
@@ -20,13 +20,18 @@ public class BaseMatrix extends AbstractMatrix {
     }
 
     @Override
+    protected IMatrix createMatrix(int rows, int cols) {
+        return new BaseMatrix(rows, cols);
+    }
+
+    @Override
     public Double getElement(int row, int col) {
-        return this.data[row-1][col-1];
+        return this.data[row - 1][col - 1];
     }
 
     @Override
     public void setElement(int row, int col, double value) {
-        this.data[row-1][col-1] = value;
+        this.data[row - 1][col - 1] = value;
     }
 
     @Override
@@ -36,7 +41,7 @@ public class BaseMatrix extends AbstractMatrix {
         }
 
         IMatrix result = new BaseMatrix(this.getSize());
-        
+
         for (int i = 1; i <= this.getSize().el1(); i++) {
             for (int j = 1; j <= this.getSize().el2(); j++) {
                 double sum = this.getElement(i, j) + o.getElement(i, j);
@@ -47,10 +52,9 @@ public class BaseMatrix extends AbstractMatrix {
         return result;
     }
 
-
     @Override
     public IMatrix mul(IMatrix o) {
-        if (this.getSize().el2() != o.getSize().el1()) {
+        if (!this.getSize().el2().equals(o.getSize().el1())) {
             throw new IllegalArgumentException("Эти матрицы не могут быть перемножены");
         }
 
@@ -73,11 +77,11 @@ public class BaseMatrix extends AbstractMatrix {
 
     @Override
     public IMatrix mulScalar(double s) {
-        IMatrix result = new BaseMatrix(this.getSize());
+        IMatrix result = createMatrix(this.getSize().el1(), this.getSize().el2());
 
-        IntStream.range(0, this.data.length)
-                .forEach(row -> IntStream.range(0, this.data[row].length)
-                        .forEach(col -> result.setElement(row + 1, col + 1, data[row][col] * s)));
+        IntStream.range(1, this.data.length)
+                .forEach(row -> IntStream.range(1, this.data[row].length)
+                        .forEach(col -> result.setElement(row, col, s * this.getElement(row, col))));
 
         return result;
     }

@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public void main(String[] args) {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             System.out.print("Введите размер матрицы (n m) >");
             int[] dims = readIntArray(reader, 2);
@@ -52,7 +52,7 @@ public class Main {
         }
     }
 
-    private static void readMatrix(BufferedReader reader, IMatrix matrix) {
+    private void readMatrix(BufferedReader reader, IMatrix matrix) {
         try {
             for (int i = 1; i <= matrix.getSize().el1(); i++) {
                 System.out.printf("Строка %d >", i);
@@ -66,7 +66,7 @@ public class Main {
         }
     }
 
-    private static int[] readIntArray(BufferedReader reader, int size) throws Exception {
+    private int[] readIntArray(BufferedReader reader, int size) throws Exception {
         return Arrays.stream(
                 reader.readLine()
                         .split("\\s+"))
@@ -74,7 +74,7 @@ public class Main {
                 .toArray();
     }
 
-    private static double[] readDoubleArray(BufferedReader reader, int size) throws Exception {
+    private double[] readDoubleArray(BufferedReader reader, int size) throws Exception {
         return Arrays.stream(
                 reader.readLine()
                         .split("\\s+"))
